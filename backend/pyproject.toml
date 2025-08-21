@@ -1,0 +1,17 @@
+[tool.poetry]
+name = "tasks-api"
+version = "0.1.0"
+description = ""
+authors = ["Felipe Carvalho <felipe.carvalho07@gmail.com>"]
+
+[tool.poetry.dependencies]
+python = "^3.12"
+django = "^5.2.5"
+djangorestframework = "^3.16.1"
+gunicorn = "^23.0.0"
+psycopg2 = "^2.9.10"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

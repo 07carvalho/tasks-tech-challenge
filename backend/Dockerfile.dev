@@ -1,0 +1,39 @@
+FROM python:3.12-slim
+
+ENV PYTHONDONTWRITEBYTECODE=1
+ENV PYTHONUNBUFFERED=1
+
+WORKDIR /code
+
+RUN set -eux; \
+    apt-get update; \
+    apt-get install -y --no-install-recommends \
+    libpq-dev \
+    libc-dev \
+    musl-dev \
+    libffi-dev \
+    build-essential \
+    openssl \
+    libssl-dev \
+    ; \
+    rm -rf /var/lib/apt/lists/*
+
+RUN pip install --upgrade pip
+
+RUN pip install poetry
+
+RUN poetry config virtualenvs.create false
+
+COPY pyproject.toml poetry.lock /code/
+
+RUN poetry config virtualenvs.create false
+
+RUN poetry install --no-interaction --no-ansi --no-root
+
+COPY . /code/
+
+EXPOSE 8000
+
+ENTRYPOINT ["/bin/bash", "docker-entrypoint.sh"]
+
+CMD ["poetry", "run", "python", "server/manage.py", "runserver", "0.0.0.0:8000"]
