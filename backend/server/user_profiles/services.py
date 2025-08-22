@@ -1,4 +1,4 @@
-from typing import Union
+from typing import Any, Dict, Union
 
 from django.contrib.auth import get_user_model
 
@@ -15,7 +15,7 @@ class UserProfileService:
         return User.objects.filter(email=email).first()
 
     @staticmethod
-    def create_user(user_data) -> User:
+    def create_user(user_data: Dict[str, Any]) -> User:
         email = user_data['email']
 
         if UserProfileService.get_user_by_email(email) is not None:
