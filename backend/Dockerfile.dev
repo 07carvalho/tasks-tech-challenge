@@ -5,35 +5,30 @@ ENV PYTHONUNBUFFERED=1
 
 WORKDIR /code
 
-RUN set -eux; \
-    apt-get update; \
+RUN apt-get update && \
     apt-get install -y --no-install-recommends \
     libpq-dev \
-    libc-dev \
-    musl-dev \
-    libffi-dev \
     build-essential \
-    openssl \
-    libssl-dev \
-    ; \
-    rm -rf /var/lib/apt/lists/*
+    gcc \
+    python3-dev \
+    pkg-config \
+    tk \
+    && rm -rf /var/lib/apt/lists/*
 
-RUN pip install --upgrade pip
-
+RUN pip install --upgrade pip setuptools wheel virtualenv
 RUN pip install poetry
-
 RUN poetry config virtualenvs.create false
 
 COPY pyproject.toml poetry.lock /code/
 
-RUN poetry config virtualenvs.create false
-
 RUN poetry install --no-interaction --no-ansi --no-root
-
-COPY . /code/
 
 EXPOSE 8000
 
-ENTRYPOINT ["/bin/bash", "docker-entrypoint.sh"]
+COPY docker-entrypoint.sh /code/docker-entrypoint.sh
+RUN chmod +x /code/docker-entrypoint.sh
 
-CMD ["poetry", "run", "python", "server/manage.py", "runserver", "0.0.0.0:8000"]
+# ENTRYPOINT ["/bin/bash", "docker-entrypoint.sh"]
+ENTRYPOINT ["/code/docker-entrypoint.sh"]
+
+CMD ["python", "manage.py", "runserver", "0.0.0.0:8000"]
