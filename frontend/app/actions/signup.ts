@@ -1,25 +1,30 @@
 "use server";
+
 import { cookies } from "next/headers";
 
-type LoginData = {
+export type SignupPayload = {
+  first_name: string;
+  last_name: string;
   email: string;
   password: string;
-}
+};
 
-export type LoginErrorResponse = {
+export type SignupErrorResponse = {
   [key: string]: string[];
 };
 
-export type LoginResponse = {
+export type SignupResponse = {
   success: boolean;
-  errors?: LoginErrorResponse;
+  errors?: SignupErrorResponse;
 };
 
-export async function login(data: LoginData): Promise<LoginResponse> {
+export async function signup(data: SignupPayload): Promise<SignupResponse> {
   try {
-    const res = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/v1/login`, {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/v1/signup`, {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
+      headers: {
+        "Content-Type": "application/json",
+      },
       body: JSON.stringify(data),
     });
 
@@ -32,7 +37,7 @@ export async function login(data: LoginData): Promise<LoginResponse> {
       }
 
       if (typeof errorBody === "object" && errorBody !== null) {
-        return { success: false, errors: errorBody as LoginErrorResponse };
+        return { success: false, errors: errorBody as SignupErrorResponse };
       }
 
       throw new Error(`Unexpected error: ${res.status}`);
@@ -45,12 +50,11 @@ export async function login(data: LoginData): Promise<LoginResponse> {
     nextCookies.set("header_type", header_type, { path: "/", httpOnly: false, sameSite: "strict" });
     nextCookies.set("access_token", access_token, { path: "/", httpOnly: false, sameSite: "strict" });
     nextCookies.set("refresh_token", refresh_token, { path: "/", httpOnly: false, sameSite: "strict" });
-
     return { success: true };
   } catch (err) {
     return {
       success: false,
-      errors: { non_field_errors: ["Failed to log in. Please try again."] },
+      errors: { non_field_errors: ["Failed to sign up. Please try again."] },
     };
   }
 }

@@ -1,6 +1,26 @@
 # tasks-tech-challenge
 Repo with backend and frontend services for a technical challenge
 
+# Submited by
+Name: Felipe Carvalho
+
+# Main instructions
+
+This repository contains both the backend and frontend projects. Open two terminals to run both projects.
+
+* `backend` directory: includes the Django project with Docker;
+* `frontend` directory: includes a NextJS project that consumes the Django RestAPI;
+
+You can find bellow the specific structions to run each project.
+
+### Important
+
+Because this is a test (not a real project), important points of software development were not covered in this repository and projects, eg:
+
+* Git branchs strategies (all commits were pushed direct to `main` branch);
+* Pipeline implementation;
+* The use of UUID or soft delete in the Django models;
+
 # backend
 
 This a Django project running with Python 3.12 and Postgres database
@@ -117,7 +137,7 @@ Configure the enviroments variables
 
 Build the app
 
-> npm build
+> npm run build
 
 Then start
 

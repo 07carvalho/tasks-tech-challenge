@@ -40,7 +40,11 @@ export default function Home() {
         {loading && <p>Loading tasks...</p>}
         {error && <p className="text-red-500">{error}</p>}
 
-        {!loading && !error && (
+        {!loading && !error && tasks.length === 0 && (
+          <p>No task created yet...</p>
+        )}
+
+        {!loading && !error && tasks && tasks.length > 0 && (
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
             {tasks.map((task) => (
               <div
@@ -62,22 +66,6 @@ export default function Home() {
           currentPage={currentPage}
           onPageChange={fetchTasks}
         />
-        {/* <div className="mt-6 flex items-center justify-between">
-          <button
-            disabled={!previous}
-            onClick={() => previous && fetchTasks(previous)}
-            className="rounded-lg bg-gray-300 px-4 py-2 text-sm text-gray-800 transition hover:bg-gray-400 disabled:opacity-50"
-          >
-            Anterior
-          </button>
-          <button
-            disabled={!next}
-            onClick={() => next && fetchTasks(next)}
-            className="rounded-lg bg-blue-600 px-4 py-2 text-sm text-white transition hover:bg-blue-700 disabled:opacity-50"
-          >
-            Próxima
-          </button>
-        </div> */}
       </div>
     </div>
   );

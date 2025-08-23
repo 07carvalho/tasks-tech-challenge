@@ -1,15 +1,17 @@
 "use client";
-import { useState, FormEvent  } from "react";
+import { useState, FormEvent } from "react";
 import { useRouter } from "next/navigation";
-import { login, LoginErrorResponse } from "./actions/login";
+import { signup, SignupErrorResponse, SignupResponse } from "../actions/signup";
 
-export default function LoginPage() {
+export default function SignupPage() {
   const router = useRouter();
   const [formData, setFormData] = useState({
+    first_name: "",
+    last_name: "",
     email: "",
     password: "",
   });
-  const [errors, setErrors] = useState<LoginErrorResponse | null>(null);
+  const [errors, setErrors] = useState<SignupErrorResponse | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -21,7 +23,7 @@ export default function LoginPage() {
     setErrors(null);
     setIsSubmitting(true);
 
-    const result = await login(formData);
+    const result: SignupResponse = await signup(formData);
 
     if (result.success) {
       router.push("/home");
@@ -30,25 +32,38 @@ export default function LoginPage() {
     }
 
     setIsSubmitting(false);
-  }
+  };
 
   return (
     <div className="flex min-h-screen items-center justify-center bg-gray-100">
       <div className="w-full max-w-md rounded-2xl bg-white p-8 shadow-lg">
         <h2 className="mb-6 text-center text-2xl font-bold text-gray-800">
-          Login
+          Sign up
         </h2>
 
-        {errors && errors.detail && (
-          <div
-            role="alert"
-            className="relative rounded-md border px-4 py-3 bg-red-50 text-red-800 border-red-200"
-          >
-            <div className="text-sm leading-relaxed">{errors.detail}</div>
+        <form onSubmit={handleSubmit} className="space-y-5">
+          <div className="mb-3">
+            <input
+              type="text"
+              name="first_name"
+              placeholder="First name"
+              value={formData.first_name}
+              onChange={handleChange}
+              className="w-full rounded-lg border border-gray-300 p-3 mb-1"
+            />
+            {errors && errors.first_name && <p className="text-sm text-red-600">{errors.first_name.join(", ")}</p>}
           </div>
-        )}
-
-        <form onSubmit={handleSubmit} className="space-y-5 mt-3">
+          <div className="mb-3">
+            <input
+              type="text"
+              name="last_name"
+              placeholder="Last name"
+              value={formData.last_name}
+              onChange={handleChange}
+              className="w-full rounded-lg border border-gray-300 p-3 mb-1"
+            />
+            {errors && errors.last_name && <p className="text-sm text-red-600">{errors.last_name.join(", ")}</p>}
+          </div>
           <div className="mb-3">
             <input
               type="email"
@@ -60,7 +75,6 @@ export default function LoginPage() {
             />
             {errors && errors.email && <p className="text-sm text-red-600">{errors.email.join(", ")}</p>}
           </div>
-
           <div className="mb-3">
             <input
               type="password"
@@ -78,12 +92,12 @@ export default function LoginPage() {
             disabled={isSubmitting}
             className="w-full rounded-lg bg-blue-600 cursor-pointer p-3 text-white transition hover:bg-blue-700 disabled:opacity-50"
           >
-            {isSubmitting ? "Logging in..." : "Login"}
+            {isSubmitting ? "Signing up..." : "Sign up"}
           </button>
         </form>
 
         <p className="mt-6 text-center text-sm text-gray-600">
-          Do not have an account? <a href="/signup" className="font-medium text-blue-600 hover:underline">Sign up</a>
+          Already have an account? <a href="/" className="font-medium text-blue-600 hover:underline">Log in</a>
         </p>
       </div>
     </div>

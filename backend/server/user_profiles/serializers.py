@@ -9,6 +9,8 @@ class LoginSerializer(serializers.Serializer):
 
 
 class SignupSerializer(serializers.ModelSerializer):
+    first_name = serializers.CharField(required=True, allow_blank=False, allow_null=False)
+    last_name = serializers.CharField(required=True, allow_blank=False, allow_null=False)
     password = serializers.CharField(write_only=True)
 
     class Meta:
