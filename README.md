@@ -91,3 +91,36 @@ By default, pre-commit runs only on staged files when you try to commit. To manu
 - List hooks: `pre-commit list`
 - Clean cache: `pre-commit clean`
 - Run specific hook: `pre-commit run <hook_id>`
+
+
+# frontend
+
+This a NextJS project.
+
+## Deployment
+
+### Prerequisites
+
+- Node.js (v18 or later recommended)
+- npm
+- Git
+
+##### Installation Steps
+
+Using npm
+
+> npm intall
+
+Configure the enviroments variables
+
+> cp .env.local .env
+
+Build the app
+
+> npm build
+
+Then start
+
+> npm start
+
+Open the app in yout browser in [http://localhost:3000](http://localhost:3000)
