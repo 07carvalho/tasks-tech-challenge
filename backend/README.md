@@ -72,3 +72,9 @@ By default, pre-commit runs only on staged files when you try to commit. To manu
 - List hooks: `pre-commit list`
 - Clean cache: `pre-commit clean`
 - Run specific hook: `pre-commit run <hook_id>`
+
+## postman
+
+In the `backend` there is folder `postman` with a collection for the Task API. Import to your Postman and run all the tests related.
+
+![Postman tests results](./postman/image.png)

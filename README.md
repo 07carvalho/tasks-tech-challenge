@@ -58,6 +58,10 @@ Additional Docker Commands
 #### Running tests
 - Run tests: `docker-compose exec web python manage.py test`
 
+## postman
+
+In the `backend` there is folder `postman` with a collection for the Task API. Import to your Postman and run all the tests related.
+
 # frontend
 
 This a NextJS project. NextJS was choosen due:
