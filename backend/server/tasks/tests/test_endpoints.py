@@ -64,11 +64,8 @@ class TaskApiTests(APITestCase):
         response = self.client.get(self.url)
 
         self.assertEqual(response.status_code, status.HTTP_200_OK)
-        self.assertEqual(response.data['count'], 1)
-        self.assertIsNone(response.data['next'])
-        self.assertIsNone(response.data['previous'])
-        self.assertEqual(len(response.data['results']), 1)
-        self.assertEqual(response.data['results'][0]['title'], 'My task')
+        self.assertEqual(len(response.data), 1)
+        self.assertEqual(response.data[0]['title'], 'My task')
 
     def test_retrieve_task(self):
         url = reverse('tasks-detail', args=[self.task.id])

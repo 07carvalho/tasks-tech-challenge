@@ -10,6 +10,7 @@ export type CreateTaskPayload = {
 
 export type Task = CreateTaskPayload & {
   id: number;
+  created_at: string;
 };
 
 export type TaskResponse = {
@@ -19,9 +20,9 @@ export type TaskResponse = {
   results: Task[];
 }
 
-export async function getTasks(page: number = 1): Promise<TaskResponse> {
+export async function getTasks(): Promise<Task[]> {
   const { accessToken, headerType } = await getAuthTokens();
-  const res = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/v1/tasks?page=${page}`, {
+  const res = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/v1/tasks`, {
     method: "GET",
     headers: {
       "Content-Type": "application/json",
