@@ -1,12 +1,16 @@
 "use server";
 import { getAuthTokens } from "@/services/authCookies";
 
-export type Task = {
-  id: number;
+export type CreateTaskPayload = {
   title: string;
   description: string;
+  status: "P" | "I" | "C";
   due_date: string;
 }
+
+export type Task = CreateTaskPayload & {
+  id: number;
+};
 
 export type TaskResponse = {
   count: number;
@@ -27,6 +31,24 @@ export async function getTasks(page: number = 1): Promise<TaskResponse> {
 
   if (!res.ok) {
     throw new Error("Failed to fetch tasks");
+  }
+
+  return await res.json();
+}
+
+export async function createTask(data: CreateTaskPayload): Promise<Task> {
+  const { accessToken, headerType } = await getAuthTokens();
+  const res = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/v1/tasks`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `${headerType} ${accessToken}`,
+    },
+    body: JSON.stringify(data),
+  });
+
+  if (!res.ok) {
+    throw new Error("Failed to create task");
   }
 
   return await res.json();

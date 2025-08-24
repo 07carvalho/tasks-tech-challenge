@@ -1,7 +1,9 @@
 "use client";
 import { useEffect, useState } from "react";
 import { Pagination } from "@/components/Pagination";
-import { getTasks, Task } from "../actions/tasks";
+import { createTask, CreateTaskPayload, getTasks, Task } from "../actions/tasks";
+import { TaskDialog } from "@/components/TaskDialog";
+import { Toast } from "@/components/Toast";
 
 export default function Home() {
   const [tasks, setTasks] = useState<Task[]>([]);
@@ -9,6 +11,8 @@ export default function Home() {
   const [error, setError] = useState<string | null>(null);
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [totalCount, setTotalCount] = useState<number>(0);
+  const [openCreateTaskDialog, setOpenCreateTaskDialog] = useState<boolean>(false);
+  const [showToast, setShowToast] = useState<boolean>(false);
 
   const fetchTasks = async (page: number = 1) => {
     try {
@@ -32,10 +36,24 @@ export default function Home() {
     fetchTasks();
   }, []);
 
+  const handleCreate = async (data: CreateTaskPayload) => {
+    await createTask(data);
+    setShowToast(true);
+    await fetchTasks(1);
+  };
+
   return (
     <div className="min-h-screen bg-gray-100 p-8">
       <div className="container mx-auto max-w-[1200px]">
-        <h1 className="mb-6 text-3xl font-bold text-gray-800">Tasks</h1>
+        <div className="flex items-center justify-between align-center mb-6">
+          <h1 className="text-3xl font-bold text-gray-800">Tasks</h1>
+          <button
+            onClick={() => setOpenCreateTaskDialog(true)}
+            className="rounded-md bg-blue-600 px-4 py-2 text-white hover:bg-blue-700 cursor-pointer"
+          >
+            New Task
+          </button>
+        </div>
 
         {loading && <p>Loading tasks...</p>}
         {error && <p className="text-red-500">{error}</p>}
@@ -67,6 +85,18 @@ export default function Home() {
           onPageChange={fetchTasks}
         />
       </div>
+      <TaskDialog
+        open={openCreateTaskDialog}
+        onClose={() => setOpenCreateTaskDialog(false)}
+        onCreate={handleCreate}
+      />
+      {showToast && (
+        <Toast
+          message="Task created successfully!"
+          type="success"
+          onClose={() => setShowToast(false)}
+        />
+      )}
     </div>
   );
 }

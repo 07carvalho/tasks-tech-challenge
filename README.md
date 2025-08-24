@@ -15,11 +15,13 @@ You can find bellow the specific structions to run each project.
 
 ### Important
 
-Because this is a test (not a real project), important points of software development were not covered in this repository and projects, eg:
+Because this is a test (not a real project) developed with limited time, important points of software development were not covered in this repository and projects, eg:
 
 * Git branchs strategies (all commits were pushed direct to `main` branch);
 * Pipeline implementation;
 * The use of UUID or soft delete in the Django models;
+* The ability to update or delete tasks via the user interface;
+* The ability to log out via the user interface;
 
 # backend
 

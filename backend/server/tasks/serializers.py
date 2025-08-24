@@ -12,6 +12,7 @@ class TaskSerializer(serializers.ModelSerializer):
             'title',
             'description',
             'due_date',
+            'status',
             'created_at',
         ]
         read_only_fields = [
