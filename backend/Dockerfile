@@ -21,7 +21,7 @@ RUN poetry config virtualenvs.create false
 
 COPY pyproject.toml poetry.lock /code/
 
-RUN poetry install --no-interaction --no-ansi --no-root
+RUN poetry install --no-interaction --no-ansi --no-root --without dev
 
 EXPOSE 8000
 
@@ -30,4 +30,4 @@ RUN chmod +x /code/docker-entrypoint.sh
 
 ENTRYPOINT ["/code/docker-entrypoint.sh"]
 
-CMD ["python", "manage.py", "runserver", "0.0.0.0:8000"]
+CMD ["gunicorn", "core.wsgi:application", "--bind", "0.0.0.0:8000", "--workers", "4"]

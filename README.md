@@ -41,6 +41,10 @@ Prerequisites:
 
 ### Installation Steps
 
+Configure the enviroments variables
+
+> cp .env.local .env
+
 Build and start containers
 > docker-compose up --build
 
