@@ -2,12 +2,14 @@ services:
   web:
     build:
       context: .
-      dockerfile: Dockerfile.dev
-    ports:
-      - "8000:8000"
+      dockerfile: Dockerfile
+    expose:
+      - "8000"
     working_dir: /code/server
     volumes:
       - .:/code
+      - static-data:/code/server/static
+      - media-data:/code/server/media
     depends_on:
       - db
     env_file:
@@ -15,7 +17,6 @@ services:
     environment:
       - DJANGO_SETTINGS_MODULE=core.settings
       - PYTHONPATH=/code/server
-    # command: python manage.py runserver 0.0.0.0:8000
     restart: unless-stopped
 
   db:
@@ -28,5 +29,19 @@ services:
     volumes:
       - db-data:/var/lib/postgresql/data
 
+  nginx:
+    image: nginx:latest
+    ports:
+      - "80:80"
+    depends_on:
+      - web
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf:ro
+      - static-data:/code/server/static
+      - media-data:/code/server/media
+    restart: unless-stopped
+
 volumes:
   db-data:
+  static-data:
+  media-data:

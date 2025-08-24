@@ -1,6 +1,8 @@
 # tasks-tech-challenge
 Repo with backend and frontend services for a technical challenge
 
+![Frontend screenshot](./image.png)
+
 # Submited by
 Name: Felipe Carvalho
 
@@ -25,99 +27,47 @@ Because this is a test (not a real project) developed with limited time, importa
 
 # backend
 
-This a Django project running with Python 3.12 and Postgres database
+This a Django project running with Python 3.12 and Postgres database.
 
-## Development
+The project is in the `server` directory and it has apps: `user_profiles` and `tasks`. Common files and configurations files are in the `core` directory.
 
-### Local development installation
+## Deployment
 
-Go inside `backend` directory to install the Django project
-
-#### Option 1:  Using Poetry (Recommended for Local Development)
-
-Prerequisites
-- Python 3.12
-- Poetry installed (pip install poetry)
-- Database with PostgreSQL
-
-##### Installation Steps
-
-Activate the virtual environment
-
-> poetry shell
-
-Install dependencies with Poetry
-
-> poetry install
-
-Set up environment variables
-
-> cp .env.example .env
-
-Go inside `server` and run the migrations
-
-> python manage.py migrate
-
-Then start the development server
-
-> python manage.py runserver
-
-Open your browser and navigate to [http://localhost:8000](http://localhost:8000)
-
-#### Option 2: Using Docker Compose
+### Prerequisites
 
 Prerequisites:
 - Docker installed
 - Docker Compose installed
 
+### Installation Steps
+
 Build and start containers
 > docker-compose up --build
 
-Open your browser and navigate to [http://localhost:8000](http://localhost:8000)
+The server will be running in [http://localhost](http://localhost)
 
 Additional Docker Commands
 - Stop containers: `docker-compose down`
 - View logs: `docker-compose logs`
 - Run specific commands: `docker-compose exec web <command>`
+
+#### Running tests
 - Run tests: `docker-compose exec web python manage.py test`
-
-
-### Linters with pre-commit
-
-Pre-commit is a tool that runs checks on your code before allowing a commit to be created. This helps catch issues early and maintains code quality standards across the project.
-
-#### Installation
-
-After install the package `pre-commit`, install the pre-commit hooks into your git repository:
-
-> pre-commit install
-
-#### Usage
-
-##### Running on all files
-
-To run pre-commit checks on all files in the repository:
-
-> pre-commit run --all-files
-
-##### Running on Staged Files Only
-
-By default, pre-commit runs only on staged files when you try to commit. To manually run on staged files:
-
-> pre-commit run
-
-##### Common comands
-
-- Install hooks: `pre-commit install`
-- Update hooks: `pre-commit autoupdate`
-- List hooks: `pre-commit list`
-- Clean cache: `pre-commit clean`
-- Run specific hook: `pre-commit run <hook_id>`
-
 
 # frontend
 
-This a NextJS project.
+This a NextJS project. NextJS was choosen due:
+
+- Server-Side Rendering (SSR): Delivers pages faster and improves SEO by rendering content on the server.
+- File-based Routing: Easy-to-manage routing system with automatic code splitting.
+- React Ecosystem: Full compatibility with React features and libraries.
+- Scalability: Handles both small and large projects efficiently with hybrid rendering options.
+- Strong Community & Support: Wide adoption, frequent updates, and extensive documentation.
+
+The application contains only three pages
+- `/` -> it is the login page
+- `/signup` -> it is the signup page
+- `/home` -> it is the page with the Task Board
 
 ## Deployment
 
@@ -127,9 +77,9 @@ This a NextJS project.
 - npm
 - Git
 
-##### Installation Steps
+### Installation Steps
 
-Using npm
+Using npm, install the dependencies
 
 > npm intall
 

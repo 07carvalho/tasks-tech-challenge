@@ -48,6 +48,7 @@ export async function login(data: LoginData): Promise<LoginResponse> {
 
     return { success: true };
   } catch (err) {
+    console.error("Login error:", err);
     return {
       success: false,
       errors: { non_field_errors: ["Failed to log in. Please try again."] },

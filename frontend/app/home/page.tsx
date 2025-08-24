@@ -1,6 +1,5 @@
 "use client";
 import { useEffect, useState } from "react";
-import { Pagination } from "@/components/Pagination";
 import { createTask, CreateTaskPayload, getTasks, Task } from "../actions/tasks";
 import { TaskDialog } from "@/components/TaskDialog";
 import { Toast } from "@/components/Toast";

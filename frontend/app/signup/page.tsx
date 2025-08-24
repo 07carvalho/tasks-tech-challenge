@@ -1,4 +1,5 @@
 "use client";
+import Link from "next/link";
 import { useState, FormEvent } from "react";
 import { useRouter } from "next/navigation";
 import { signup, SignupErrorResponse, SignupResponse } from "../actions/signup";
@@ -97,7 +98,7 @@ export default function SignupPage() {
         </form>
 
         <p className="mt-6 text-center text-sm text-gray-600">
-          Already have an account? <a href="/" className="font-medium text-blue-600 hover:underline">Log in</a>
+          Already have an account? <Link href="/" className="font-medium text-blue-600 hover:underline">Log in</Link>
         </p>
       </div>
     </div>

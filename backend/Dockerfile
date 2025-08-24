@@ -28,7 +28,6 @@ EXPOSE 8000
 COPY docker-entrypoint.sh /code/docker-entrypoint.sh
 RUN chmod +x /code/docker-entrypoint.sh
 
-# ENTRYPOINT ["/bin/bash", "docker-entrypoint.sh"]
 ENTRYPOINT ["/code/docker-entrypoint.sh"]
 
 CMD ["python", "manage.py", "runserver", "0.0.0.0:8000"]

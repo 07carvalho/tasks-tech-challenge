@@ -52,6 +52,7 @@ export async function signup(data: SignupPayload): Promise<SignupResponse> {
     nextCookies.set("refresh_token", refresh_token, { path: "/", httpOnly: false, sameSite: "strict" });
     return { success: true };
   } catch (err) {
+    console.error("Login error:", err);
     return {
       success: false,
       errors: { non_field_errors: ["Failed to sign up. Please try again."] },
